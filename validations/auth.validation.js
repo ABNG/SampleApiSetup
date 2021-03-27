@@ -29,10 +29,23 @@ const resetPassword = {
     email: Joi.string().email().required(), 
   }),
 };
+const logout = {
+  body: Joi.object().keys({
+    refreshToken: Joi.string().required(),
+  }),
+};
+
+const refreshTokens = {
+  body: Joi.object().keys({
+    refreshToken: Joi.string().required(),
+  }),
+};
 
 module.exports = {
   register,
   login,
   forgotPassword,
   resetPassword,
+  logout,
+  refreshTokens,
 };

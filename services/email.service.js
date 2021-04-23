@@ -5,7 +5,7 @@ const generatePassword = require('password-generator');
 const userService = require('./user.service');
 const ApiError = require('../utils/ApiError');
 const httpStatus = require('http-status');
-const path = require("path");
+const name = require("path").dirname('views');
 const ejs = require("ejs");
 
 const transport = nodemailer.createTransport(config.email.smtp);
@@ -32,11 +32,13 @@ const sendEmail = async (to, subject, html,password,id) => {
       throw new ApiError(httpStatus.UNAUTHORIZED, 'E-mail Service Failed.');
     }
     else{
-        try{
-       await userService.updateUserById(id,{ password: password });
-        }catch (error) {
+      if(password && id) {
+        try {
+          await userService.updateUserById(id, {password: password});
+        } catch (error) {
           throw new ApiError(httpStatus.UNAUTHORIZED, 'Password reset failed:');
         }
+      }
     }
   });
 };
@@ -54,7 +56,6 @@ const sendResetPasswordEmail = async (to) => {
   }
   else{
   const password=generatePassword(8);
-  const name=path.dirname('views');
   const data = await ejs.renderFile(name + "/views/email.template.ejs", { username: user.name,
   password: password });
   const subject = 'Reset password';
@@ -64,8 +65,24 @@ const sendResetPasswordEmail = async (to) => {
   }
 };
 
+/**
+ * Send verification email
+ * @param {string} to
+ * @param {string} token
+ * @returns {Promise}
+ */
+const sendVerificationEmail = async (to, token) => {
+  const subject = 'Email Verification';
+  // replace this url with the link to the email verification page of your front-end app
+  const verificationEmailUrl = `http://link-to-app/verify-email?token=${token}`;
+  const data = await ejs.renderFile(name + "/views/verification_email.template.ejs", { verificationEmailUrl: verificationEmailUrl });
+  const html = data;
+  await sendEmail(to, subject, html);
+};
+
 module.exports = {
   transport,
   sendEmail,
   sendResetPasswordEmail,
+  sendVerificationEmail,
 };

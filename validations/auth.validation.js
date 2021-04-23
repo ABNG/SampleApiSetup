@@ -40,6 +40,11 @@ const refreshTokens = {
     refreshToken: Joi.string().required(),
   }),
 };
+const verifyEmail = {
+  query: Joi.object().keys({
+    token: Joi.string().required(),
+  }),
+};
 
 module.exports = {
   register,
@@ -48,4 +53,5 @@ module.exports = {
   resetPassword,
   logout,
   refreshTokens,
+  verifyEmail,
 };

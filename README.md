@@ -36,6 +36,9 @@ List of available routes:
 `POST /v1/auth/refresh-tokens` - refresh auth tokens<br>
 `POST /v1/auth/forgot-password` - send reset password email<br>
 `POST /v1/auth/reset-password` - reset password<br>
+`POST /v1/auth/refresh-tokens` - refresh Token<br>
+`POST /v1/auth/send-verification-email` - send Email Verification<br>
+`POST /v1/auth/verify-email` - verify email<br>
 
 ### User routes:
 `POST /v1/users` - create a user<br>

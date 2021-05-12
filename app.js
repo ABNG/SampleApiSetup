@@ -52,6 +52,9 @@ if (config.env === 'production') {
 //making static folder to make it publically accessable
 app.use(express.static("public"));
 app.use("/v1/storage",express.static("public/storage"));
+app.use("/css",express.static("public/css"));
+app.use("/img",express.static("public/img"));
+app.use("/js",express.static("public/js"));
 
 //set up ejs template for email
 app.set('view engine','ejs');

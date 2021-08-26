@@ -1,4 +1,4 @@
-const { Strategy: JwtStrategy, ExtractJwt } = require('passport-jwt');
+const { Strategy: JwtStrategy, ExtractJwt } = require('passport-jwt'); //verify token is correct or not
 const config = require('./config');
 const { User } = require('../models');
 const { tokenTypes } = require('./tokens');
